@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { jwtConstants } from './auth.constants';
 import { JwtService } from '@nestjs/jwt';
 import 'dotenv/config';
 @Injectable()
