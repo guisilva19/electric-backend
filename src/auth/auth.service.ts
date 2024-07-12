@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { jwtConstants } from './auth.constants';
 import { JwtService } from '@nestjs/jwt';
-
+import 'dotenv/config';
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService) {}
@@ -11,7 +11,7 @@ export class AuthService {
       access_token: this.jwtService.sign(
         { nome: 'Guilherme' },
         {
-          secret: jwtConstants.secret,
+          secret: process.env.KEY_SECRET_JWT as string,
           expiresIn: '24h',
         },
       ),
