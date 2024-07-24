@@ -1,15 +1,43 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client-js"
 }
 
-generator client {
-    provider = "prisma-client-js"
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model user {
-    id       String @id @default(uuid())
-    name     String
-    email    String @unique
-    password String
+  id           String        @id @default(uuid())
+  email        String        @unique
+  senha        String
+  nome         String
+  telefone     String
+  
+  homologation homologation?
+}
+
+model homologation {
+  id                                      Int      @id @default(autoincrement())
+  numero_conta_contrato                   String?
+  distancia_entre_inversor_e_distribuicao String?
+  tipo_de_ligacao                         String?
+  tensao_de_fornecimento                  String?
+  disjuntor_do_padrao                     String?
+  cabo_do_padrao                          String?
+  ampliacao                               Boolean?
+  carga_instalada                         String?
+  total_de_inversores                     Int?
+  total_de_modulos                        Int?
+  modelo_do_inversor_inserido             String?
+  modelo_do_modulo_inserido               String?
+  quantidade_modulos_inseridos            String?
+  quantidade_inversores_inseridos         String?
+  modelo_do_inversor_homologado           String?
+  modelo_do_modulo_homologado             String?
+  quantidade_modulos_homologados          String?
+  quantidade_inversores_homologados       String?
+
+  user_id String @unique
+  user    user   @relation(fields: [user_id], references: [id])
 }
