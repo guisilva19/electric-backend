@@ -16,18 +16,18 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const comparePasswordHashed = bcrypt.compareSync(pass, user.password);
+    const comparePasswordHashed = bcrypt.compareSync(pass, user.senha);
 
     if (user && comparePasswordHashed) {
-      const { password, ...result } = user;
+      const { senha, ...result } = user;
       return result;
     } else {
       throw new UnauthorizedException();
     }
   }
 
-  async auth({ email, password }: { email: string; password: string }) {
-    const user = await this.validateUser(email, password);
+  async auth({ email, senha }: { email: string; senha: string }) {
+    const user = await this.validateUser(email, senha);
     return {
       token: this.jwtService.sign(user, {
         secret: process.env.KEY_SECRET_JWT as string,
