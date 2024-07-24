@@ -1,14 +1,9 @@
-import {
-  IsString,
-  IsNotEmpty,
-  MinLength,
-  IsEmail,
-} from 'class-validator';
+import { IsString, IsNotEmpty, MinLength, IsEmail } from 'class-validator';
 
 export class UserDTO {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  nome: string;
 
   @IsString()
   @IsNotEmpty()
@@ -17,6 +12,10 @@ export class UserDTO {
 
   @IsString()
   @IsNotEmpty()
+  telefone: string;
+
+  @IsString()
+  @IsNotEmpty()
   @MinLength(8)
-  password: string;
+  senha: string;
 }

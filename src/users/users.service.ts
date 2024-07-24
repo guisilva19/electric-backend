@@ -12,7 +12,6 @@ export class UsersService {
   }
 
   async register(user: UserDTO) {
-    console.log('USER BODY', user);
     const userAlreadyRegistered = await this.db.user.findFirst({
       where: {
         email: user.email,
@@ -26,12 +25,12 @@ export class UsersService {
     const userCreated = await this.db.user.create({
       data: {
         ...user,
-        password: bcrypt.hashSync(user.password, 10),
+        senha: bcrypt.hashSync(user.senha, 10),
       },
       select: {
         id: true,
         email: true,
-        name: true,
+        nome: true,
       },
     });
 
