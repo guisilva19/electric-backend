@@ -11,6 +11,8 @@ export class HomologationController {
   @Post()
   async createHomologation(@Body() homologation) {
     // const token = request.headers.authorization.split(' ')[1];
+
+    
     return await this.homologationService.createHomologation(homologation)
   }
 }

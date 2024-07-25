@@ -6,6 +6,10 @@ export class HomologationService {
   constructor(private readonly db: ConnectionService) {}
 
   async createHomologation(homologation) {
-    return homologation;
+    return await this.db.homologation.create({
+      data: {
+        ampliacao: true,
+      },
+    });
   }
 }

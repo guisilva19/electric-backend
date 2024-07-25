@@ -13,7 +13,6 @@ model user {
   senha        String
   nome         String
   telefone     String
-  homologation homologation?
 }
 
 model homologation {
@@ -36,6 +35,5 @@ model homologation {
   modelo_do_modulo_homologado             String?
   quantidade_modulos_homologados          String?
   quantidade_inversores_homologados       String?
-  user_id                                 String   @unique
-  user                                    user     @relation(fields: [user_id], references: [id])
+
 }
