@@ -9,6 +9,7 @@ export class HomologationService {
     return await this.db.homologation.create({
       data: {
         ampliacao: true,
+        modelo_do_inversor_homologado: homologation,
       },
     });
   }
