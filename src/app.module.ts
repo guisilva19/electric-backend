@@ -4,9 +4,19 @@ import { AuthModule } from './auth/auth.module';
 import { ConnectionService } from './connection/connection.service';
 import { ConnectionModule } from './connection/connection.module';
 import { HomologationModule } from './homologation/homologation.module';
+import { ConfigModule } from '@nestjs/config';
+import { DocumentsModule } from './documents/documents.module';
+
 
 @Module({
-  imports: [UsersModule, AuthModule, ConnectionModule, HomologationModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    AuthModule,
+    ConnectionModule,
+    HomologationModule,
+    DocumentsModule,
+  ],
   controllers: [],
   providers: [ConnectionService],
 })

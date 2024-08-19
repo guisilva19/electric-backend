@@ -7,6 +7,25 @@ export class HomologationDTO {
   })
   @IsString()
   @IsNotEmpty()
+  nome: string;
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  @IsNotEmpty()
+  telefone: string;
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  @IsNotEmpty()
   numero_conta_contrato: string;
 
   @ApiProperty({
@@ -61,14 +80,12 @@ export class HomologationDTO {
   @ApiProperty({
     example: 1,
   })
-  @IsString()
   @IsNotEmpty()
   total_de_inversores: number;
 
   @ApiProperty({
     example: 1,
   })
-  @IsString()
   @IsNotEmpty()
   total_de_modulos: number;
 
@@ -104,48 +121,56 @@ export class HomologationDTO {
     example: 'string',
   })
   @IsString()
-  @IsNotEmpty()
   modelo_do_inversor_homologado: string;
 
   @ApiProperty({
     example: 'string',
   })
   @IsString()
-  @IsNotEmpty()
   modelo_do_modulo_homologado: string;
 
   @ApiProperty({
     example: 'string',
   })
   @IsString()
-  @IsNotEmpty()
   quantidade_modulos_homologados: string;
 
   @ApiProperty({
     example: 'string',
   })
   @IsString()
-  @IsNotEmpty()
   quantidade_inversores_homologados: string;
+
+  ////
+
+  @ApiProperty({
+    example: false,
+  })
+  @IsNotEmpty()
+  outras_conta_recebera_credito: boolean;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  @IsNotEmpty()
+  numero_conta_contrato_02: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  media_consumo_conta_02: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  numero_conta_contrato_03: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  @IsString()
+  media_consumo_conta_03: string;
 }
-
-// numero_conta_contrato                   String?
-// distancia_entre_inversor_e_distribuicao String?
-// tipo_de_ligacao                         String? MONOFÁSICA | BIFÁSICA | TRIFÁSICA
-// tensao_de_fornecimento                  String? 220/380 | 127/220
-// disjuntor_do_padrao                     String? 40A | 50A | 63A | 70A | 100A | 125A | OUTRO
-// cabo_do_padrao                          String?
-// ampliacao                               Boolean?
-// carga_instalada                         String?
-// total_de_inversores                     Int?
-// total_de_modulos                        Int?
-// modelo_do_inversor_inserido             String?
-// modelo_do_modulo_inserido               String?
-// quantidade_modulos_inseridos            String?
-// quantidade_inversores_inseridos         String?
-// modelo_do_inversor_homologado           String?
-// modelo_do_modulo_homologado             String?
-// quantidade_modulos_homologados          String?
-// quantidade_inversores_homologados       String?
-
-// 

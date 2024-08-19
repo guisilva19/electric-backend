@@ -16,7 +16,10 @@ model user {
 }
 
 model homologation {
-  id                                      Int      @id @default(autoincrement())
+  id                                      String   @id @default(uuid())
+  nome                                    String?
+  telefone                                String?
+  email                                   String?
   numero_conta_contrato                   String?
   distancia_entre_inversor_e_distribuicao String?
   tipo_de_ligacao                         String?
@@ -35,5 +38,22 @@ model homologation {
   modelo_do_modulo_homologado             String?
   quantidade_modulos_homologados          String?
   quantidade_inversores_homologados       String?
+  outras_conta_recebera_credito           Boolean?
+  numero_conta_contrato_02                String?
+  media_consumo_conta_02                  String?
+  numero_conta_contrato_03                String?
+  media_consumo_conta_03                  String?
 
+  documentos documento[]
+}
+
+model documento {
+  id         String   @id @default(uuid())
+  url        String
+  nome       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  homologation   homologation? @relation(fields: [homologationId], references: [id])
+  homologationId String
 }
