@@ -8,11 +8,11 @@ datasource db {
 }
 
 model user {
-  id           String        @id @default(uuid())
-  email        String        @unique
-  senha        String
-  nome         String
-  telefone     String
+  id       String @id @default(uuid())
+  email    String @unique
+  senha    String
+  nome     String
+  telefone String
 }
 
 model homologation {
@@ -38,14 +38,57 @@ model homologation {
   modelo_do_modulo_homologado             String?
   quantidade_modulos_homologados          String?
   quantidade_inversores_homologados       String?
-  outras_conta_recebera_credito           Boolean?
-  numero_conta_contrato_02                String?
-  media_consumo_conta_02                  String?
-  numero_conta_contrato_03                String?
-  media_consumo_conta_03                  String?
+  transformador                           Boolean?
+
+  outras_conta_recebera_credito Boolean?
+  numero_conta_contrato_02      String?
+  media_consumo_conta_02        String?
+  numero_conta_contrato_03      String?
+  media_consumo_conta_03        String?
 
   documentos documento[]
 }
+
+// cabo_do_padrao
+// "16"
+// carga_instalada
+// "1"
+// disjuntor_do_padrao
+// "70"
+// distancia_entre_inversor_e_distribuicao
+// "1"
+// email
+// "2003silvagui@gmail.com"
+// modelo_do_inversor_homologado
+// "1"
+// modelo_do_inversor_inserido
+// "1"
+// modelo_do_modulo_homologado
+// "1"
+// modelo_do_modulo_inserido
+// "1"
+// nome
+// "Guilherme Silva Fernandes"
+// numero_conta_contrato
+// "12345678"
+// quantidade_inversores_homologados
+// "1"
+// quantidade_inversores_inseridos
+// "1"
+// quantidade_medidores
+// "1"
+// quantidade_modulos_homologados
+// "1"
+// quantidade_modulos_inseridos
+// "1"
+// telefone
+// "7799664132"
+// tensao_de_fornecimento
+// "127/220"
+// tipo_de_ligacao
+// "MONOFÁSICA"
+// transformador
+// false
 
 model documento {
   id         String   @id @default(uuid())
