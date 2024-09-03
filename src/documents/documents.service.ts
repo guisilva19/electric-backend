@@ -1,35 +1,39 @@
-import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { ConnectionService } from 'src/connection/connection.service';
-import * as AWS from 'aws-sdk';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 @Injectable()
 export class DocumentsService {
+  private s3: S3Client;
+
   constructor(
     private readonly db: ConnectionService,
     private jwtService: JwtService,
-  ) {}
-
-  async create(file: Express.Multer.File, id) {
-    const s3 = new AWS.S3({
+  ) {
+    this.s3 = new S3Client({
+      region: process.env.S3_REGION,
       credentials: {
         accessKeyId: process.env.S3_ACCESS_KEY,
         secretAccessKey: process.env.S3_SECRET_ACCESS,
       },
     });
+  }
 
+  async create(file: Express.Multer.File, id: string) {
     const params = {
       Bucket: process.env.S3_BUCKET_NAME,
       Key: file.originalname,
       Body: file.buffer,
     };
 
-    const { Key, Location } = await s3.upload(params).promise();
+    const command = new PutObjectCommand(params);
+    await this.s3.send(command);
 
     const document = this.db.documento.create({
       data: {
-        nome: Key,
-        url: Location,
+        nome: file.originalname,
+        url: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${file.originalname}`,
         homologationId: id,
       },
     });
