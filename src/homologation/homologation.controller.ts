@@ -9,7 +9,7 @@ export class HomologationController {
   constructor(private readonly homologationService: HomologationService) {}
 
   @Post()
-  async createHomologation(@Body() homologation) {
+  async createHomologation(@Body() homologation: HomologationDTO) {
     return await this.homologationService.createHomologation(homologation);
   }
 }
