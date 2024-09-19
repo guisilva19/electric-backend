@@ -6,7 +6,7 @@ import { ConnectionModule } from './connection/connection.module';
 import { HomologationModule } from './homologation/homologation.module';
 import { ConfigModule } from '@nestjs/config';
 import { DocumentsModule } from './documents/documents.module';
-
+import { PaymentsModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -16,6 +16,7 @@ import { DocumentsModule } from './documents/documents.module';
     ConnectionModule,
     HomologationModule,
     DocumentsModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [ConnectionService],
