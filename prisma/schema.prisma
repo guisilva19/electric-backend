@@ -38,6 +38,7 @@ model homologation {
   modelo_do_modulo_homologado             String?
   quantidade_modulos_homologados          String?
   quantidade_inversores_homologados       String?
+  quantidade_medidores                    String?
   transformador                           Boolean?
 
   outras_conta_recebera_credito Boolean?
@@ -48,6 +49,23 @@ model homologation {
 
   documentos documento[]
 }
+
+// "nome":"Guilherme Silva Fernandes",
+// "cabo_do_padrao":"10",
+// "disjuntor_do_padrao":"63",
+// "distancia_entre_inversor_e_distribuicao":"12",
+// "email":"2003silvagui@gmail.com",
+// "modelo_do_inversor_inserido":"1",
+// "modelo_do_modulo_inserido":"1",
+// "numero_conta_contrato":"12345678",
+// "quantidade_inversores_inseridos":"1",
+// "quantidade_medidores":"1",
+// "quantidade_modulos_inseridos":"1",
+// "telefone":"7799664132",
+// "tensao_de_fornecimento":"127/220",
+// "tipo_de_ligacao":"MONOFÁSICA",
+// "transformador":false,
+// "ampliacao":false,
 
 model documento {
   id         String   @id @default(uuid())
