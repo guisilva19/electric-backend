@@ -42,30 +42,10 @@ model homologation {
   transformador                           Boolean?
 
   outras_conta_recebera_credito Boolean?
-  numero_conta_contrato_02      String?
-  media_consumo_conta_02        String?
-  numero_conta_contrato_03      String?
-  media_consumo_conta_03        String?
+  contas_receber_credito        conta_receber_credito[]
 
   documentos documento[]
 }
-
-// "nome":"Guilherme Silva Fernandes",
-// "cabo_do_padrao":"10",
-// "disjuntor_do_padrao":"63",
-// "distancia_entre_inversor_e_distribuicao":"12",
-// "email":"2003silvagui@gmail.com",
-// "modelo_do_inversor_inserido":"1",
-// "modelo_do_modulo_inserido":"1",
-// "numero_conta_contrato":"12345678",
-// "quantidade_inversores_inseridos":"1",
-// "quantidade_medidores":"1",
-// "quantidade_modulos_inseridos":"1",
-// "telefone":"7799664132",
-// "tensao_de_fornecimento":"127/220",
-// "tipo_de_ligacao":"MONOFÁSICA",
-// "transformador":false,
-// "ampliacao":false,
 
 model documento {
   id         String   @id @default(uuid())
@@ -76,4 +56,12 @@ model documento {
 
   homologation   homologation? @relation(fields: [homologationId], references: [id])
   homologationId String
+}
+
+model conta_receber_credito {
+  id                    String        @id @default(uuid())
+  numero_conta_contrato String
+  media_consumo_conta   String?
+  homologation          homologation? @relation(fields: [homologation_id], references: [id])
+  homologation_id       String?
 }
