@@ -42,7 +42,7 @@ model homologation {
   transformador                           Boolean?
 
   outras_conta_recebera_credito Boolean?
-  contas_receber_credito        conta_receber_credito[]
+  contas_receber_credito        Json?
 
   documentos documento[]
 }
@@ -56,12 +56,4 @@ model documento {
 
   homologation   homologation? @relation(fields: [homologationId], references: [id])
   homologationId String
-}
-
-model conta_receber_credito {
-  id                    String        @id @default(uuid())
-  numero_conta_contrato String
-  media_consumo_conta   String?
-  homologation          homologation? @relation(fields: [homologation_id], references: [id])
-  homologation_id       String?
 }
