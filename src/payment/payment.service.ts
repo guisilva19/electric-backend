@@ -46,9 +46,8 @@ export class PaymentsService {
     return paymentLink;
   }
 
-  constructEvent(payload: Buffer, sig: string | string[]): Stripe.Event {
-    const endpointSecret = process.env.STRIPE_WEBHOOK_KEY;
-
-    return this.stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+  async validatePayment(body) {
+    console.log(body);
+    return body;
   }
 }
