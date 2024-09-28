@@ -27,7 +27,7 @@ export class PaymentsService {
   async createPaymentLink(): Promise<Stripe.PaymentLink> {
     const price = await this.stripe.prices.create({
       unit_amount: 29900,
-      currency: 'usd',
+      currency: 'brl',
       nickname: 'EP Engenharia',
       product_data: {
         name: 'Homologação',
