@@ -6,11 +6,11 @@ import { PaymentsService } from './payment.service';
 export class PaymentsController {
   constructor(private paymentsService: PaymentsService) {}
 
-  @Post('create-payment-link')
-  async createPaymentLink() {
-    const paymentLink = await this.paymentsService.createPaymentLink();
-    return { url: paymentLink.url };
-  }
+  // @Post('create-payment-link')
+  // async createPaymentLink() {
+  //   const paymentLink = await this.paymentsService.createPaymentLink();
+  //   return { url: paymentLink.url };
+  // }
 
   @Post('webhook')
   async handleStripeWebhook(@Req() req: Request) {
