@@ -16,15 +16,15 @@ export class PaymentsController {
   @Post('webhook')
   async handleStripeWebhook(@Req() req: Request, @Res() res: Response) {
     const sig = req.headers['stripe-signature'];
-    const rawBody = req.body;
+    const rawBody = req.body; // O corpo da requisição agora é o raw body (Buffer)
 
     let event: Stripe.Event;
 
     try {
-      event = this.paymentsService.constructEvent(rawBody, sig);
+      event = this.paymentsService.constructEvent(rawBody, sig); // Passe o corpo bruto aqui
     } catch (err) {
       console.log(`⚠️ Webhook signature verification failed.`, err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+      return res.status(400).send(`${rawBody}| Webhook Error: ${err.message}`);
     }
 
     switch (event.type) {
