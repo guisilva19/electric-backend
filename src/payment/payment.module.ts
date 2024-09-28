@@ -2,10 +2,11 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { PaymentsService } from './payment.service';
 import { PaymentsController } from './payment.controller';
 import * as bodyParser from 'body-parser';
+import { ConnectionService } from 'src/connection/connection.service';
 
 @Module({
   imports: [],
-  providers: [PaymentsService],
+  providers: [PaymentsService, ConnectionService],
   controllers: [PaymentsController],
 })
 export class PaymentsModule implements NestModule {

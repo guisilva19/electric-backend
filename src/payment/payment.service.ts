@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { ConnectionService } from 'src/connection/connection.service';
 import Stripe from 'stripe';
 
 @Injectable()
 export class PaymentsService {
   private stripe: Stripe;
 
-  constructor() {
+  constructor(private readonly db: ConnectionService) {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
       apiVersion: '2024-06-20',
     });
@@ -52,9 +53,20 @@ export class PaymentsService {
   async validatePayment(body) {
     const payment = JSON.parse(body);
 
-    return {
-      homologation: payment?.data?.metada?.homologation_id,
-      homo: payment?.metada?.homologation_id,
-    };
+    const id = payment.data.object.metadata.homologation_id;
+    const eventType = payment.type;
+
+    if (eventType === 'checkout.session.completed') {
+      await this.db.homologation.update({
+        where: {
+          id: id,
+        },
+        data: {
+          status_payment: true,
+        },
+      });
+    }
+
+    return {};
   }
 }
