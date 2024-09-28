@@ -47,7 +47,6 @@ export class PaymentsService {
   }
 
   async validatePayment(body) {
-    console.log(body);
-    return body;
+    return JSON.parse(body);
   }
 }
