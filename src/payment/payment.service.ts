@@ -11,16 +11,43 @@ export class PaymentsService {
     });
   }
 
-  async createPaymentIntent() {
-    return await this.stripe.paymentIntents.create({
-      amount: 29900,
-      currency: 'brl',
+  // async createPaymentIntent() {
+  //   return await this.stripe.paymentIntents.create({
+  //     amount: 29900,
+  //     currency: 'brl',
+  //   });
+  // }
+
+  // async confirmPaymentIntent(paymentIntentId: string, paymentMethodId: string) {
+  //   return await this.stripe.paymentIntents.confirm(paymentIntentId, {
+  //     payment_method: paymentMethodId,
+  //   });
+  // }
+
+  async createPaymentLink(): Promise<Stripe.PaymentLink> {
+    const price = await this.stripe.prices.create({
+      unit_amount: 29900,
+      currency: 'usd',
+      product_data: {
+        name: 'Homologação',
+      },
     });
+
+    const paymentLink = await this.stripe.paymentLinks.create({
+      line_items: [
+        {
+          price: price.id,
+          quantity: 1,
+        },
+      ],
+    });
+
+    return paymentLink;
   }
 
-  async confirmPaymentIntent(paymentIntentId: string, paymentMethodId: string) {
-    return await this.stripe.paymentIntents.confirm(paymentIntentId, {
-      payment_method: paymentMethodId,
-    });
+  constructEvent(payload: Buffer, sig: string | string[]): Stripe.Event {
+    const endpointSecret = 'YOUR_WEBHOOK_SECRET'; // O segredo do webhook que você configurou no Stripe
+
+    return this.stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   }
 }

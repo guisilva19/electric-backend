@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   const options = new DocumentBuilder()
-    .setTitle('API DIVORCIO WEB')
-    .setDescription('Documentation for API by Divorcio Web')
+    .setTitle('API ELECTRIC POWER')
+    .setDescription('Documentation for API by Electric Power')
     .setVersion('1.0')
     .addBearerAuth(
       {
