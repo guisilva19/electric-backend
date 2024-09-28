@@ -40,6 +40,8 @@ model homologation {
   quantidade_inversores_homologados       String?
   quantidade_medidores                    String?
   transformador                           Boolean?
+  status_payment                          Boolean  @default(false)
+  link_payment                            String?
 
   outras_conta_recebera_credito Boolean?
   contas_receber_credito        Json?

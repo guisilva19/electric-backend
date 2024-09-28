@@ -1,6 +1,5 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
-import Stripe from 'stripe';
+import { Controller, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { PaymentsService } from './payment.service';
 
 @Controller('payments')

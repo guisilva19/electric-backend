@@ -24,7 +24,7 @@ export class PaymentsService {
   //   });
   // }
 
-  async createPaymentLink(): Promise<Stripe.PaymentLink> {
+  async createPaymentLink(id: string): Promise<Stripe.PaymentLink> {
     const price = await this.stripe.prices.create({
       unit_amount: 29900,
       currency: 'brl',
@@ -41,12 +41,20 @@ export class PaymentsService {
           quantity: 1,
         },
       ],
+      metadata: {
+        homologation_id: id,
+      },
     });
 
     return paymentLink;
   }
 
   async validatePayment(body) {
-    return JSON.parse(body);
+    const payment = JSON.parse(body);
+
+    return {
+      homologation: payment.data.metada.homologation_id,
+      homo: payment.metada.homologation_id,
+    };
   }
 }
