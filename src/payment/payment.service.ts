@@ -46,7 +46,7 @@ export class PaymentsService {
   }
 
   constructEvent(payload: Buffer, sig: string | string[]): Stripe.Event {
-    const endpointSecret = 'YOUR_WEBHOOK_SECRET'; // O segredo do webhook que você configurou no Stripe
+    const endpointSecret = 'we_1Q461eIEg91PAPSRldAEEENZ'; // O segredo do webhook que você configurou no Stripe
 
     return this.stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   }
