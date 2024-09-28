@@ -28,6 +28,7 @@ export class PaymentsService {
     const price = await this.stripe.prices.create({
       unit_amount: 29900,
       currency: 'usd',
+      nickname: 'EP Engenharia',
       product_data: {
         name: 'Homologação',
       },
@@ -46,7 +47,7 @@ export class PaymentsService {
   }
 
   constructEvent(payload: Buffer, sig: string | string[]): Stripe.Event {
-    const endpointSecret = 'we_1Q461eIEg91PAPSRldAEEENZ'; // O segredo do webhook que você configurou no Stripe
+    const endpointSecret = 'we_1Q467RIEg91PAPSRqHZ57I2x';
 
     return this.stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   }
