@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { PaymentsService } from './payment.service';
-import {} from 'stripe';
 
 @Controller('payments')
 export class PaymentsController {
@@ -13,9 +13,9 @@ export class PaymentsController {
   }
 
   @Post('webhook')
-  async handleStripeWebhook(@Body() body) {
-    // const rawBody = req.body;
+  async handleStripeWebhook(@Req() req: Request) {
+    const rawBody = req.body;
 
-    return this.paymentsService.validatePayment(body);
+    return this.paymentsService.validatePayment(rawBody);
   }
 }
