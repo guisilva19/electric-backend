@@ -17,7 +17,7 @@ export class HomologationService {
       },
     });
 
-    const { url } = await this.paymentsService.createPaymentLink(createUser.id);
+    const { url } = await this.paymentsService.createPaymentLink(createUser?.id);
 
     return this.db.homologation.update({
       where: {
