@@ -5,7 +5,7 @@ import Stripe from 'stripe';
 
 @Controller('payments')
 export class PaymentsController {
-  constructor(private paymentsService: PaymentsService, ) {}
+  constructor(private paymentsService: PaymentsService) {}
 
   // @Post('create-payment')
   // async createPaymentIntent() {
@@ -31,13 +31,14 @@ export class PaymentsController {
   }
 
   @Post('webhook')
-  async handleStripeWebhook(@Req() req, @Res() res: Response) {
+  async handleStripeWebhook(@Req() req: Request, @Res() res: Response) {
     const sig = req.headers['stripe-signature'];
+    const rawBody = req['rawBody']; // Use o rawBody capturado no middleware
 
     let event: Stripe.Event;
 
     try {
-      event = this.paymentsService.constructEvent(req.rawBody, sig);
+      event = this.paymentsService.constructEvent(rawBody, sig);
     } catch (err) {
       console.log(`⚠️ Webhook signature verification failed.`, err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);

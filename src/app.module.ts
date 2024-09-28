@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionService } from './connection/connection.service';
@@ -7,6 +7,7 @@ import { HomologationModule } from './homologation/homologation.module';
 import { ConfigModule } from '@nestjs/config';
 import { DocumentsModule } from './documents/documents.module';
 import { PaymentsModule } from './payment/payment.module';
+import { RawBodyMiddleware } from './middleware';
 
 @Module({
   imports: [
@@ -21,4 +22,8 @@ import { PaymentsModule } from './payment/payment.module';
   controllers: [],
   providers: [ConnectionService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RawBodyMiddleware).forRoutes('webhook');
+  }
+}
