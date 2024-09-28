@@ -53,8 +53,8 @@ export class PaymentsService {
     const payment = JSON.parse(body);
 
     return {
-      homologation: payment.data.metada.homologation_id,
-      homo: payment.metada.homologation_id,
+      homologation: payment?.data?.metada?.homologation_id,
+      homo: payment?.metada?.homologation_id,
     };
   }
 }
