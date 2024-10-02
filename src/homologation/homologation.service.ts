@@ -17,7 +17,9 @@ export class HomologationService {
       },
     });
 
-    const { url } = await this.paymentsService.createPaymentLink(createUser?.id);
+    const { url } = await this.paymentsService.createPaymentLink(
+      createUser?.id,
+    );
 
     return this.db.homologation.update({
       where: {
@@ -25,6 +27,25 @@ export class HomologationService {
       },
       data: {
         link_payment: url,
+      },
+    });
+  }
+
+  async list(id: string) {
+    return this.db.homologation.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        documentos: true,
+      },
+    });
+  }
+
+  async listAll() {
+    return this.db.homologation.findMany({
+      select: {
+        documentos: true,
       },
     });
   }
