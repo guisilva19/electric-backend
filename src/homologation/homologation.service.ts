@@ -11,22 +11,29 @@ export class HomologationService {
   ) {}
 
   async createHomologation(homologation: HomologationDTO) {
-    const createUser = await this.db.homologation.create({
+    const createHomologation = await this.db.homologation.create({
       data: {
         ...homologation,
       },
     });
 
     const { url } = await this.paymentsService.createPaymentLink(
-      createUser?.id,
+      createHomologation?.id,
     );
 
     return this.db.homologation.update({
       where: {
-        id: createUser.id,
+        id: createHomologation.id,
       },
       data: {
         link_payment: url,
+      },
+      select: {
+        email: true,
+        link_payment: true,
+        status_payment: true,
+        telefone: true,
+        id: true,
       },
     });
   }
