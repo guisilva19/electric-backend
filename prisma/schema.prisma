@@ -59,3 +59,16 @@ model documento {
   homologation   homologation? @relation(fields: [homologationId], references: [id])
   homologationId String
 }
+
+model orcamento {
+  id                    String   @id @default(uuid())
+  nome                  String
+  email                 String
+  telefone              String
+  local                 String
+  cidade                String
+  endereco              String
+  valor_da_conta_de_luz String
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+}
