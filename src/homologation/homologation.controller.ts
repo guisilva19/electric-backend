@@ -1,4 +1,4 @@
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { HomologationService } from './homologation.service';
 import {
   Body,
@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -32,10 +33,19 @@ export class HomologationController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Número da página (opcional, padrão 1)',
+  })
   @Get('')
-  async listAll(@Req() request) {
-    const token = request.headers.authorization.split(' ')[1];
-    return await this.homologationService.listAll(token);
+  async listAll(
+    @Req() request,
+    @Query('page') page: number = 1,
+  ) {
+    const token = request.headers.authorization?.split(' ')[1];
+    return await this.homologationService.listAll(token, page);
   }
 
   @UseGuards(JwtAuthGuard)

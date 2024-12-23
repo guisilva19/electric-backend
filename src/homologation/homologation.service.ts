@@ -85,45 +85,62 @@ export class HomologationService {
     });
   }
 
-  async listAll(token: string) {
+  async listAll(token: string, page: number = 1) {
+    const pageSize = 10;
     const decoded = this.jwtService.decode(token);
     if (!decoded || typeof decoded !== 'object' || !decoded.id) {
       throw new UnauthorizedException('Token inválido ou ausente');
     }
 
-    return this.db.homologation.findMany({
-      select: {
-        id: true,
-        nome: true,
-        email: true,
-        ampliacao: true,
-        telefone: true,
-        link_payment: true,
-        status_payment: true,
-        cabo_do_padrao: true,
-        carga_instalada: true,
-        disjuntor_do_padrao: true,
-        distancia_entre_inversor_e_distribuicao: true,
-        modelo_do_inversor_homologado: true,
-        modelo_do_inversor_inserido: true,
-        modelo_do_modulo_homologado: true,
-        modelo_do_modulo_inserido: true,
-        numero_conta_contrato: true,
-        outras_conta_recebera_credito: true,
-        quantidade_inversores_homologados: true,
-        quantidade_inversores_inseridos: true,
-        quantidade_medidores: true,
-        quantidade_modulos_homologados: true,
-        quantidade_modulos_inseridos: true,
-        tensao_de_fornecimento: true,
-        tipo_de_ligacao: true,
-        total_de_inversores: true,
-        total_de_modulos: true,
-        transformador: true,
-        contas_receber_credito: true,
-        documentos: true,
-      },
-    });
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+
+    const [items, total] = await Promise.all([
+      this.db.homologation.findMany({
+        skip,
+        take,
+        select: {
+          id: true,
+          nome: true,
+          email: true,
+          ampliacao: true,
+          telefone: true,
+          link_payment: true,
+          status_payment: true,
+          cabo_do_padrao: true,
+          carga_instalada: true,
+          disjuntor_do_padrao: true,
+          distancia_entre_inversor_e_distribuicao: true,
+          modelo_do_inversor_homologado: true,
+          modelo_do_inversor_inserido: true,
+          modelo_do_modulo_homologado: true,
+          modelo_do_modulo_inserido: true,
+          numero_conta_contrato: true,
+          outras_conta_recebera_credito: true,
+          quantidade_inversores_homologados: true,
+          quantidade_inversores_inseridos: true,
+          quantidade_medidores: true,
+          quantidade_modulos_homologados: true,
+          quantidade_modulos_inseridos: true,
+          tensao_de_fornecimento: true,
+          tipo_de_ligacao: true,
+          total_de_inversores: true,
+          total_de_modulos: true,
+          transformador: true,
+          contas_receber_credito: true,
+          documentos: true,
+        },
+      }),
+      this.db.homologation.count(),
+    ]);
+
+    return {
+      items,
+      total,
+      page: Number(page),
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   async listAllPaid(token: string) {
