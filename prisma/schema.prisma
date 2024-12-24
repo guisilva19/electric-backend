@@ -41,6 +41,7 @@ model homologation {
   quantidade_medidores                    String?
   transformador                           Boolean?
   status_payment                          Boolean  @default(false)
+  status                                  Boolean  @default(false)
   link_payment                            String?
 
   outras_conta_recebera_credito Boolean?
@@ -68,6 +69,7 @@ model orcamento {
   local                 String
   cidade                String
   endereco              String
+  status                Boolean  @default(false)
   valor_da_conta_de_luz String
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt

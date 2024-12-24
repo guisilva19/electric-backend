@@ -22,16 +22,21 @@ export class OrcamentoService {
     });
   }
 
-  async listAll(page: number = 1) {
+  async listAll(page: number = 1, status: number = 0) {
     const pageSize = 10;
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
+    // Definir a condição de filtro baseado no status
+    const statusFilter =
+      Number(status) === 1 ? { status: false } : Number(status) === 2 ? { status: true } : {};
+
     const [items, total] = await Promise.all([
       this.db.orcamento.findMany({
         skip,
         take,
+        where: statusFilter,
         select: {
           id: true,
           nome: true,
@@ -40,12 +45,15 @@ export class OrcamentoService {
           telefone: true,
           endereco: true,
           local: true,
+          status: true,
           valor_da_conta_de_luz: true,
           created_at: true,
           updated_at: true,
         },
       }),
-      this.db.orcamento.count(),
+      this.db.orcamento.count({
+        where: statusFilter,
+      }),
     ]);
 
     return {
