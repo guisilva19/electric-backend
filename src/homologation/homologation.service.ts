@@ -13,7 +13,7 @@ export class HomologationService {
   ) {}
 
   async createHomologation(homologation: HomologationDTO) {
-    const createHomologation = await this.db.homologation.create({
+    const createHomologation = await this.db.homologacao.create({
       data: {
         ...homologation,
       },
@@ -23,19 +23,19 @@ export class HomologationService {
       createHomologation?.id,
     );
 
-    return this.db.homologation.update({
+    return this.db.homologacao.update({
       where: {
         id: createHomologation.id,
       },
       data: {
-        link_payment: url,
+        link_pagamento: url,
       },
       select: {
         id: true,
         nome: true,
         email: true,
-        link_payment: true,
-        status_payment: true,
+        link_pagamento: true,
+        status_pagamento: true,
         telefone: true,
       },
     });
@@ -47,7 +47,7 @@ export class HomologationService {
       throw new UnauthorizedException('Token inválido ou ausente');
     }
 
-    return this.db.homologation.findUnique({
+    return this.db.homologacao.findUnique({
       where: {
         id: id,
       },
@@ -57,8 +57,8 @@ export class HomologationService {
         email: true,
         ampliacao: true,
         telefone: true,
-        link_payment: true,
-        status_payment: true,
+        link_pagamento: true,
+        status_pagamento: true,
         cabo_do_padrao: true,
         carga_instalada: true,
         disjuntor_do_padrao: true,
@@ -85,28 +85,33 @@ export class HomologationService {
     });
   }
 
-  async listAll(token: string, page: number = 1) {
+  async listAll(page: number = 1, status: number = 0) {
     const pageSize = 10;
-    const decoded = this.jwtService.decode(token);
-    if (!decoded || typeof decoded !== 'object' || !decoded.id) {
-      throw new UnauthorizedException('Token inválido ou ausente');
-    }
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
+    const statusFilter =
+      Number(status) === 1
+        ? { status: false }
+        : Number(status) === 2
+          ? { status: true }
+          : {};
+
     const [items, total] = await Promise.all([
-      this.db.homologation.findMany({
+      this.db.homologacao.findMany({
         skip,
         take,
+        where: statusFilter,
         select: {
           id: true,
           nome: true,
           email: true,
           ampliacao: true,
           telefone: true,
-          link_payment: true,
-          status_payment: true,
+          link_pagamento: true,
+          status_pagamento: true,
+          status: true,
           cabo_do_padrao: true,
           carga_instalada: true,
           disjuntor_do_padrao: true,
@@ -131,27 +136,22 @@ export class HomologationService {
           documentos: true,
         },
       }),
-      this.db.homologation.count(),
+      this.db.homologacao.count(),
     ]);
 
     return {
       items,
-      total,
+      total: items.length,
       page: Number(page),
       pageSize,
       totalPages: Math.ceil(total / pageSize),
     };
   }
 
-  async listAllPaid(token: string) {
-    const decoded = this.jwtService.decode(token);
-    if (!decoded || typeof decoded !== 'object' || !decoded.id) {
-      throw new UnauthorizedException('Token inválido ou ausente');
-    }
-
-    return this.db.homologation.findMany({
+  async listAllPaid() {
+    return this.db.homologacao.findMany({
       where: {
-        status_payment: true,
+        status_pagamento: true,
       },
       select: {
         id: true,
@@ -159,8 +159,8 @@ export class HomologationService {
         email: true,
         ampliacao: true,
         telefone: true,
-        link_payment: true,
-        status_payment: true,
+        link_pagamento: true,
+        status_pagamento: true,
         cabo_do_padrao: true,
         carga_instalada: true,
         disjuntor_do_padrao: true,
@@ -193,9 +193,9 @@ export class HomologationService {
       throw new UnauthorizedException('Token inválido ou ausente');
     }
 
-    return this.db.homologation.findMany({
+    return this.db.homologacao.findMany({
       where: {
-        status_payment: false,
+        status_pagamento: false,
       },
       select: {
         id: true,
@@ -203,8 +203,8 @@ export class HomologationService {
         email: true,
         ampliacao: true,
         telefone: true,
-        link_payment: true,
-        status_payment: true,
+        link_pagamento: true,
+        status_pagamento: true,
         cabo_do_padrao: true,
         carga_instalada: true,
         disjuntor_do_padrao: true,

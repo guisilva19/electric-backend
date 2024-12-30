@@ -39,21 +39,22 @@ export class HomologationController {
     type: Number,
     description: 'Número da página (opcional, padrão 1)',
   })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    type: Number,
+    description: 'Número do status (opcional, padrão 0)',
+  })
   @Get('')
-  async listAll(
-    @Req() request,
-    @Query('page') page: number = 1,
-  ) {
-    const token = request.headers.authorization?.split(' ')[1];
-    return await this.homologationService.listAll(token, page);
+  async listAll( @Query('page') page: number = 1, @Query('status') status: number = 0) {
+    return await this.homologationService.listAll(page, status);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
   @Get('/paid')
-  async listAllPaid(@Req() request) {
-    const token = request.headers.authorization.split(' ')[1];
-    return await this.homologationService.listAllPaid(token);
+  async listAllPaid() {
+    return await this.homologationService.listAllPaid();
   }
 
   @UseGuards(JwtAuthGuard)

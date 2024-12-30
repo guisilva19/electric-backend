@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
-import { OrcamentoService } from './orcamento.service';
-import { OrcamentoDTO } from './orcamento.dto';
+import { BudgetService } from './budget.service';
+import { BudgetDTO } from './budget.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 
 
 @ApiTags('Orçameto')
 @Controller('orcamento')
-export class OrcamentoController {
-  constructor(private readonly orcamentoService: OrcamentoService) {}
+export class BudgetController {
+  constructor(private readonly budgetService: BudgetService) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
@@ -26,11 +26,11 @@ export class OrcamentoController {
   })
   @Get()
   async listAll(@Query('page') page: number = 1, @Query('status') status: number = 0) {
-    return this.orcamentoService.listAll(page, status);
+    return this.budgetService.listAll(page, status);
   }
 
   @Post()
-  async newBudget(@Body() body: OrcamentoDTO) {
-    return this.orcamentoService.create(body);
+  async newBudget(@Body() body: BudgetDTO) {
+    return this.budgetService.create(body);
   }
 }

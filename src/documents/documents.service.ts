@@ -37,7 +37,7 @@ export class DocumentsService {
         data: {
           nome: file.originalname,
           url: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${file.originalname}`,
-          homologationId: id,
+          homologacao_id: id,
         },
       });
 
@@ -50,7 +50,7 @@ export class DocumentsService {
   async findMyDocs(id: string) {
     const myDocs = await this.db.documento.findMany({
       where: {
-        homologationId: id,
+        homologacao_id: id,
       },
     });
 

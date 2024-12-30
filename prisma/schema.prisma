@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model usuario {
   id       String @id @default(uuid())
   email    String @unique
   senha    String
@@ -15,7 +15,7 @@ model user {
   telefone String
 }
 
-model homologation {
+model homologacao {
   id                                      String   @id @default(uuid())
   nome                                    String?
   telefone                                String?
@@ -40,9 +40,9 @@ model homologation {
   quantidade_inversores_homologados       String?
   quantidade_medidores                    String?
   transformador                           Boolean?
-  status_payment                          Boolean  @default(false)
+  status_pagamento                        Boolean  @default(false)
   status                                  Boolean  @default(false)
-  link_payment                            String?
+  link_pagamento                          String?
 
   outras_conta_recebera_credito Boolean?
   contas_receber_credito        Json?
@@ -51,14 +51,14 @@ model homologation {
 }
 
 model documento {
-  id         String   @id @default(uuid())
-  url        String
-  nome       String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id            String   @id @default(uuid())
+  url           String
+  nome          String
+  criado_em     DateTime @default(now())
+  atualizado_em DateTime @updatedAt
 
-  homologation   homologation? @relation(fields: [homologationId], references: [id])
-  homologationId String
+  homologation   homologacao? @relation(fields: [homologacao_id], references: [id])
+  homologacao_id String
 }
 
 model orcamento {
@@ -71,6 +71,6 @@ model orcamento {
   endereco              String
   status                Boolean  @default(false)
   valor_da_conta_de_luz String
-  created_at            DateTime @default(now())
-  updated_at            DateTime @updatedAt
+  criado_em             DateTime @default(now())
+  atualizado_em         DateTime @updatedAt
 }

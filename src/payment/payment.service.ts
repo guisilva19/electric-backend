@@ -57,12 +57,12 @@ export class PaymentsService {
     const eventType = payment.type;
 
     if (eventType === 'checkout.session.completed') {
-      await this.db.homologation.update({
+      await this.db.homologacao.update({
         where: {
           id: id,
         },
         data: {
-          status_payment: true,
+          status_pagamento: true,
         },
       });
     }

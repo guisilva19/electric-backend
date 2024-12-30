@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ConnectionService } from 'src/connection/connection.service';
-import { OrcamentoDTO } from './orcamento.dto';
+import { BudgetDTO } from './budget.dto';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 @Injectable()
-export class OrcamentoService {
+export class BudgetService {
   constructor(private readonly db: ConnectionService) {}
 
-  async create(body: OrcamentoDTO) {
+  async create(body: BudgetDTO) {
     await this.db.orcamento.create({
       data: body,
     });
@@ -47,8 +47,8 @@ export class OrcamentoService {
           local: true,
           status: true,
           valor_da_conta_de_luz: true,
-          created_at: true,
-          updated_at: true,
+          criado_em: true,
+          atualizado_em: true,
         },
       }),
       this.db.orcamento.count({

@@ -7,7 +7,7 @@ import { HomologationModule } from './homologation/homologation.module';
 import { ConfigModule } from '@nestjs/config';
 import { DocumentsModule } from './documents/documents.module';
 import { PaymentsModule } from './payment/payment.module';
-import { OrcamentoModule } from './orcamento/orcamento.module';
+import { BudgetModule } from './budget/budget.module';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { OrcamentoModule } from './orcamento/orcamento.module';
     HomologationModule,
     DocumentsModule,
     PaymentsModule,
-    OrcamentoModule,
+    BudgetModule,
   ],
   controllers: [],
   providers: [ConnectionService],
