@@ -26,9 +26,8 @@ export class HomologationController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
   @Get(':id')
-  async listHomologation(@Req() request, @Param('id') id: string) {
-    const token = request.headers.authorization.split(' ')[1];
-    return await this.homologationService.list(id, token);
+  async listHomologation(@Param('id') id: string) {
+    return await this.homologationService.list(id);
   }
 
   @UseGuards(JwtAuthGuard)

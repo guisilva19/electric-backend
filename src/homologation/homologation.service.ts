@@ -41,11 +41,7 @@ export class HomologationService {
     });
   }
 
-  async list(id: string, token: string) {
-    const decoded = this.jwtService.decode(token);
-    if (!decoded || typeof decoded !== 'object' || !decoded.id) {
-      throw new UnauthorizedException('Token inválido ou ausente');
-    }
+  async list(id: string) {
 
     return this.db.homologacao.findUnique({
       where: {
@@ -59,6 +55,7 @@ export class HomologationService {
         telefone: true,
         link_pagamento: true,
         status_pagamento: true,
+        status: true,
         cabo_do_padrao: true,
         carga_instalada: true,
         disjuntor_do_padrao: true,
