@@ -32,6 +32,13 @@ export class HomologationController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
+  @Get(':id')
+  async updateHomologation(@Param('id') id: string, @Body() body: any) {
+    return await this.homologationService.update(id, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiQuery({
     name: 'page',
     required: false,
@@ -45,7 +52,10 @@ export class HomologationController {
     description: 'Número do status (opcional, padrão 0)',
   })
   @Get('')
-  async listAll( @Query('page') page: number = 1, @Query('status') status: number = 0) {
+  async listAll(
+    @Query('page') page: number = 1,
+    @Query('status') status: number = 0,
+  ) {
     return await this.homologationService.listAll(page, status);
   }
 

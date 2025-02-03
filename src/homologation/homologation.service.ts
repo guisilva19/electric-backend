@@ -42,7 +42,6 @@ export class HomologationService {
   }
 
   async list(id: string) {
-
     return this.db.homologacao.findUnique({
       where: {
         id: id,
@@ -78,6 +77,17 @@ export class HomologationService {
         transformador: true,
         contas_receber_credito: true,
         documentos: true,
+      },
+    });
+  }
+
+  async update(id: string, data: any) {
+    return this.db.homologacao.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...data,
       },
     });
   }
