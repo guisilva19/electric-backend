@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { BudgetDTO } from './budget.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -33,4 +33,11 @@ export class BudgetController {
   async newBudget(@Body() body: BudgetDTO) {
     return this.budgetService.create(body);
   }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('access-token')
+    @Patch(':id')
+    async updateBudget(@Param('id') id: string, @Body() body: any) {
+      return await this.budgetService.update(id, body);
+    }
 }

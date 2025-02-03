@@ -22,6 +22,17 @@ export class BudgetService {
     });
   }
 
+  async update(id: string, { status }: { status: boolean }) {
+    return await this.db.orcamento.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status,
+      },
+    });
+  }
+
   async listAll(page: number = 1, status: number = 0) {
     const pageSize = 10;
 
@@ -30,7 +41,11 @@ export class BudgetService {
 
     // Definir a condição de filtro baseado no status
     const statusFilter =
-      Number(status) === 1 ? { status: false } : Number(status) === 2 ? { status: true } : {};
+      Number(status) === 1
+        ? { status: false }
+        : Number(status) === 2
+          ? { status: true }
+          : {};
 
     const [items, total] = await Promise.all([
       this.db.orcamento.findMany({

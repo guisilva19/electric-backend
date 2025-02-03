@@ -5,6 +5,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -32,7 +33,7 @@ export class HomologationController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
-  @Get(':id')
+  @Patch(':id')
   async updateHomologation(@Param('id') id: string, @Body() body: any) {
     return await this.homologationService.update(id, body);
   }
